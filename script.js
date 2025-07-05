@@ -173,4 +173,81 @@ function playVideo(video) {
 }
 
 // Initialize
-loadVideos();
+loadFromLocalStorage();
+
+// Add event listeners
+uploadBtn.addEventListener('click', () => {
+    uploadModal.style.display = 'block';
+});
+
+// Load videos when GitHub API is initialized
+initializeGitHub().then(() => {
+    loadVideos();
+});
+
+searchBtn.addEventListener('click', () => {
+    const searchTerm = searchInput.value.toLowerCase();
+    const filteredVideos = videos.filter(video => 
+        video.title.toLowerCase().includes(searchTerm) ||
+        video.description.toLowerCase().includes(searchTerm)
+    );
+    videos = filteredVideos;
+    updateVideoGrid();
+});
+
+// Update video grid
+function updateVideoGrid() {
+    videoGrid.innerHTML = '';
+    
+    videos.slice(0, 12).forEach(video => {
+        const videoCard = document.createElement('div');
+        videoCard.className = 'video-card';
+        videoCard.innerHTML = `
+            <div class="video-thumbnail" style="background-image: url('${video.thumbnail}')"></div>
+            <div class="video-info">
+                <h3>${video.title}</h3>
+                <p>${video.description}</p>
+                <div class="video-meta">
+                    <span>${formatDate(video.uploadedAt)}</span>
+                </div>
+            </div>
+        `;
+        videoCard.addEventListener('click', () => playVideo(video));
+        videoGrid.appendChild(videoCard);
+    });
+}
+
+// Format date
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('de-DE', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+}
+
+// Play video function
+function playVideo(video) {
+    const modal = document.createElement('div');
+    modal.className = 'video-modal';
+    modal.innerHTML = `
+        <div class="video-player">
+            <video controls>
+                <source src="${video.url}" type="video/mp4">
+                Dein Browser unterstützt kein Video.
+            </video>
+            <div class="video-details">
+                <h2>${video.title}</h2>
+                <p>${video.description}</p>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            document.body.removeChild(modal);
+        }
+    });
+}
