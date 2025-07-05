@@ -2,7 +2,7 @@
 <html lang="de">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Simeon Rohrmann</title>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
     <style>
@@ -23,6 +23,7 @@
         background: var(--dark);
         color: var(--light);
         overflow-x: hidden;
+        padding-top: 3.5rem; /* Platz für Nav */
       }
 
       nav {
@@ -51,47 +52,31 @@
         color: var(--accent);
       }
 
-      header {
-        height: 100vh;
-        display: flex;
+      .page {
+        min-height: 100vh;
+        padding: 3rem 2rem;
+        display: none;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background: radial-gradient(circle at center, #111 0%, #000 100%);
         text-align: center;
-        padding: 2rem;
-        margin-top: 4rem; /* damit nav nicht drüber liegt */
       }
 
-      header h1 {
-        font-family: 'Anton', sans-serif;
-        font-size: 4rem;
+      .page.active {
+        display: flex;
+      }
+
+      .page h1,
+      .page h2 {
         color: var(--accent);
         margin-bottom: 1rem;
-        letter-spacing: 2px;
       }
 
-      header p {
-        font-size: 1.25rem;
-        max-width: 600px;
+      .page p {
         color: #ccc;
-      }
-
-      .section {
-        min-height: 100vh;
-        padding: 4rem 2rem;
-        background: #111;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-      }
-
-      .section h2 {
-        font-size: 3rem;
-        color: var(--accent);
-        margin-bottom: 1.5rem;
+        max-width: 600px;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
       }
 
       .cards {
@@ -160,20 +145,6 @@
         background: #00d6c4;
       }
 
-      /* Seiten verstecken/zeigen */
-      .page {
-        display: none;
-      }
-
-      .page.active {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        text-align: center;
-      }
-
       footer {
         text-align: center;
         padding: 2rem;
@@ -191,10 +162,8 @@
 
     <!-- Home Seite -->
     <section id="home" class="page active">
-      <header>
-        <h1>Simeon Rohrmann</h1>
-        <p>idk was dad ist hier aber hab viel spaß :)</p>
-      </header>
+      <h1>Simeon Rohrmann</h1>
+      <p>idk was dad ist hier aber hab viel spaß :)</p>
 
       <div class="cards">
         <div class="card">
@@ -237,7 +206,6 @@
         "https://media.giphy.com/media/3oEjHP8ELRNNlnlLGM/giphy.gif"
       ];
 
-      // GIF Button Logik
       const gifImg = document.getElementById('randomGif');
       const btn = document.getElementById('newGifBtn');
       btn.addEventListener('click', () => {
