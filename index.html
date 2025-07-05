@@ -6,6 +6,7 @@
     <title>VideoTube - Video Teilen & Entdecken</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
     <nav class="navbar">
@@ -15,8 +16,8 @@
             <button id="searchBtn"><i class="fas fa-search"></i></button>
         </div>
         <div class="nav-buttons">
-            <button id="uploadBtn">Video hochladen</button>
-            <button id="loginBtn">Anmelden</button>
+            <button id="uploadBtn" class="btn-primary">Video hochladen</button>
+            <button id="loginBtn" class="btn-secondary">Anmelden</button>
         </div>
     </nav>
 
@@ -27,29 +28,51 @@
                 <li><a href="#"><i class="fas fa-fire"></i> Trending</a></li>
                 <li><a href="#"><i class="fas fa-subscriptions"></i> Abos</a></li>
                 <li><a href="#"><i class="fas fa-history"></i> Verlauf</a></li>
+                <li><a href="#"><i class="fas fa-upload"></i> Uploads</a></li>
             </ul>
         </div>
 
         <div class="content">
-            <div class="upload-modal" id="uploadModal">
+            <!-- Upload Modal -->
+            <div class="modal" id="uploadModal">
                 <div class="modal-content">
                     <h2>Video hochladen</h2>
                     <form id="uploadForm">
-                        <input type="file" id="videoFile" accept="video/*" required>
-                        <input type="text" id="videoTitle" placeholder="Video-Titel" required>
-                        <textarea id="videoDescription" placeholder="Beschreibung"></textarea>
-                        <button type="submit">Hochladen</button>
+                        <div class="form-group">
+                            <label for="videoFile">Video auswählen</label>
+                            <input type="file" id="videoFile" accept="video/*" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="videoTitle">Titel</label>
+                            <input type="text" id="videoTitle" placeholder="Video-Titel" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="videoDescription">Beschreibung</label>
+                            <textarea id="videoDescription" placeholder="Beschreibung des Videos"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn-primary">Hochladen</button>
+                            <button type="button" id="closeModal" class="btn-secondary">Abbrechen</button>
+                        </div>
                     </form>
                 </div>
             </div>
 
-            <div class="video-grid" id="videoGrid">
-                <!-- Videos werden hier dynamisch eingefügt -->
+            <!-- Main Content -->
+            <div class="main-content">
+                <div class="video-grid" id="videoGrid">
+                    <!-- Videos werden hier dynamisch eingefügt -->
+                </div>
             </div>
         </div>
     </main>
 
+    <!-- Loading Spinner -->
+    <div id="loading" class="loading-spinner">
+        <div class="spinner"></div>
+    </div>
+
     <script src="github-api.js"></script>
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
