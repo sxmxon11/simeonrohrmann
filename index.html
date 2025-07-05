@@ -99,6 +99,41 @@
         font-size: 0.95rem;
       }
 
+      /* Neues Styling für GIF-Bereich */
+      .gif-container {
+        margin-top: 3rem;
+        max-width: 500px;
+        width: 100%;
+        background: #222;
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 1px solid #333;
+        box-shadow: 0 0 10px var(--accent);
+      }
+
+      .gif-container img {
+        max-width: 100%;
+        border-radius: 8px;
+        user-select: none;
+      }
+
+      .btn-gif {
+        margin-top: 1rem;
+        background: var(--accent);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--dark);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .btn-gif:hover {
+        background: #00d6c4;
+      }
+
       footer {
         text-align: center;
         padding: 2rem;
@@ -130,10 +165,39 @@
           <p>bullshit.</p>
         </div>
       </div>
+
+      <!-- Random GIF Bereich -->
+      <div class="gif-container">
+        <img id="randomGif" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Random GIF" />
+        <button class="btn-gif" id="newGifBtn">Neues GIF anzeigen</button>
+      </div>
     </section>
 
     <footer>
       &copy; 2025 Simeon Rohrmann - oder so idk
     </footer>
+
+    <script>
+      const gifs = [
+        "https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif",
+        "https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif",
+        "https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif",
+        "https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif",
+        "https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif",
+        "https://media.giphy.com/media/l0MYB8Ory7Hqefo9a/giphy.gif",
+        "https://media.giphy.com/media/3oEjHP8ELRNNlnlLGM/giphy.gif"
+      ];
+
+      const gifImg = document.getElementById('randomGif');
+      const btn = document.getElementById('newGifBtn');
+
+      btn.addEventListener('click', () => {
+        let newGif;
+        do {
+          newGif = gifs[Math.floor(Math.random() * gifs.length)];
+        } while (newGif === gifImg.src);
+        gifImg.src = newGif;
+      });
+    </script>
   </body>
 </html>
