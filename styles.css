@@ -85,6 +85,9 @@ main {
     border-radius: 8px;
     padding: 1rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: fixed;
+    height: calc(100vh - 80px);
+    overflow-y: auto;
 }
 
 .sidebar ul {
@@ -98,11 +101,13 @@ main {
     text-decoration: none;
     color: var(--text-color);
     border-radius: 4px;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    gap: 0.5rem;
 }
 
-.sidebar a:hover {
-    background: #f0f0f0;
+.sidebar a:hover, .sidebar a.active {
+    background: #f8f8f8;
+    color: var(--primary-color);
 }
 
 .sidebar a.active {
