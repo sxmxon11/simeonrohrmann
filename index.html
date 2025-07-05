@@ -25,6 +25,32 @@
         overflow-x: hidden;
       }
 
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: #111;
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid #222;
+        z-index: 100;
+      }
+
+      nav a {
+        color: #666;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      nav a.active,
+      nav a:hover {
+        color: var(--accent);
+      }
+
       header {
         height: 100vh;
         display: flex;
@@ -34,6 +60,7 @@
         background: radial-gradient(circle at center, #111 0%, #000 100%);
         text-align: center;
         padding: 2rem;
+        margin-top: 4rem; /* damit nav nicht drüber liegt */
       }
 
       header h1 {
@@ -99,9 +126,8 @@
         font-size: 0.95rem;
       }
 
-      /* Neues Styling für GIF-Bereich */
+      /* Random GIF Bereich */
       .gif-container {
-        margin-top: 3rem;
         max-width: 500px;
         width: 100%;
         background: #222;
@@ -134,6 +160,20 @@
         background: #00d6c4;
       }
 
+      /* Seiten verstecken/zeigen */
+      .page {
+        display: none;
+      }
+
+      .page.active {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        text-align: center;
+      }
+
       footer {
         text-align: center;
         padding: 2rem;
@@ -144,13 +184,18 @@
     </style>
   </head>
   <body>
-    <header>
-      <h1>Simeon Rohrmann</h1>
-      <p>idk was dad ist hier aber hab viel spaß :)</p>
-    </header>
+    <nav>
+      <a href="#home" id="nav-home" class="active">Home</a>
+      <a href="#memes" id="nav-memes">Random Memes</a>
+    </nav>
 
-    <section class="section">
-      <h2>lol</h2>
+    <!-- Home Seite -->
+    <section id="home" class="page active">
+      <header>
+        <h1>Simeon Rohrmann</h1>
+        <p>idk was dad ist hier aber hab viel spaß :)</p>
+      </header>
+
       <div class="cards">
         <div class="card">
           <h3>platzhalter oder so</h3>
@@ -165,8 +210,11 @@
           <p>bullshit.</p>
         </div>
       </div>
+    </section>
 
-      <!-- Random GIF Bereich -->
+    <!-- Random Memes Seite -->
+    <section id="memes" class="page">
+      <h2>Random Memes</h2>
       <div class="gif-container">
         <img id="randomGif" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Random GIF" />
         <button class="btn-gif" id="newGifBtn">Neues GIF anzeigen</button>
@@ -178,6 +226,7 @@
     </footer>
 
     <script>
+      // GIF Liste
       const gifs = [
         "https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif",
         "https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif",
@@ -188,15 +237,41 @@
         "https://media.giphy.com/media/3oEjHP8ELRNNlnlLGM/giphy.gif"
       ];
 
+      // GIF Button Logik
       const gifImg = document.getElementById('randomGif');
       const btn = document.getElementById('newGifBtn');
-
       btn.addEventListener('click', () => {
         let newGif;
         do {
           newGif = gifs[Math.floor(Math.random() * gifs.length)];
         } while (newGif === gifImg.src);
         gifImg.src = newGif;
+      });
+
+      // Navigation & Hash-Seitenwechsel
+      const pages = document.querySelectorAll('.page');
+      const navLinks = document.querySelectorAll('nav a');
+
+      function setActivePage(hash) {
+        const id = hash.replace('#', '') || 'home';
+
+        pages.forEach(page => {
+          page.classList.toggle('active', page.id === id);
+        });
+
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+
+      // Auf Initialen Hash reagieren
+      window.addEventListener('load', () => {
+        setActivePage(window.location.hash);
+      });
+
+      // Auf Hash-Change reagieren
+      window.addEventListener('hashchange', () => {
+        setActivePage(window.location.hash);
       });
     </script>
   </body>
