@@ -3,14 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>Seite im Aufbau</title>
+  <style>
+    #secretContent {
+      display: none;
+      color: red;
+      font-size: 24px;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Diese Seite ist im Aufbau.</h1>
+  <h1 id="mainTitle">Diese Seite ist im Aufbau.</h1>
   <h2>by Simeon Rohrmann</h2>
 
-  <video controls id="videoPlayer" width="640" height="360">
-    <source id="videoSource" src="video.mp4" type="video/mp4">
-    Dein Browser unterstützt kein Video.
-  </video>
+  <div id="secretContent">
+    🕵️‍♂️ Geheime Nachricht: Willkommen im verborgenen Bereich!
+  </div>
+
+  <script>
+    if (window.location.hash === "#secret") {
+      document.getElementById("mainTitle").textContent = "🔒 Geheime Seite aktiviert!";
+      document.getElementById("secretContent").style.display = "block";
+    }
+  </script>
 </body>
 </html>
