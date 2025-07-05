@@ -1,246 +1,55 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Simeon Rohrmann</title>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
-    <style>
-      :root {
-        --accent: #00ffe1;
-        --dark: #0d0d0d;
-        --light: #f9f9f9;
-      }
-
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        font-family: 'Inter', sans-serif;
-        background: var(--dark);
-        color: var(--light);
-        overflow-x: hidden;
-        padding-top: 3.5rem; /* Platz für Nav */
-      }
-
-      nav {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        background: #111;
-        display: flex;
-        justify-content: center;
-        gap: 3rem;
-        padding: 1rem 0;
-        border-bottom: 1px solid #222;
-        z-index: 100;
-      }
-
-      nav a {
-        color: #666;
-        font-weight: 700;
-        font-size: 1.1rem;
-        text-decoration: none;
-        transition: color 0.3s ease;
-      }
-
-      nav a.active,
-      nav a:hover {
-        color: var(--accent);
-      }
-
-      .page {
-        min-height: 100vh;
-        padding: 3rem 2rem;
-        display: none;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-      }
-
-      .page.active {
-        display: flex;
-      }
-
-      .page h1,
-      .page h2 {
-        color: var(--accent);
-        margin-bottom: 1rem;
-      }
-
-      .page p {
-        color: #ccc;
-        max-width: 600px;
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-      }
-
-      .cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        width: 100%;
-        max-width: 1000px;
-      }
-
-      .card {
-        background: #1a1a1a;
-        border: 1px solid #333;
-        border-radius: 12px;
-        padding: 2rem;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
-
-      .card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 20px var(--accent);
-      }
-
-      .card h3 {
-        color: var(--accent);
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .card p {
-        color: #aaa;
-        font-size: 0.95rem;
-      }
-
-      /* Random GIF Bereich */
-      .gif-container {
-        max-width: 500px;
-        width: 100%;
-        background: #222;
-        padding: 1.5rem;
-        border-radius: 12px;
-        border: 1px solid #333;
-        box-shadow: 0 0 10px var(--accent);
-      }
-
-      .gif-container img {
-        max-width: 100%;
-        border-radius: 8px;
-        user-select: none;
-      }
-
-      .btn-gif {
-        margin-top: 1rem;
-        background: var(--accent);
-        border: none;
-        padding: 0.75rem 1.5rem;
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: var(--dark);
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-
-      .btn-gif:hover {
-        background: #00d6c4;
-      }
-
-      footer {
-        text-align: center;
-        padding: 2rem;
-        background: #000;
-        color: #666;
-        font-size: 0.9rem;
-      }
-    </style>
-  </head>
-  <body>
-    <nav>
-      <a href="#home" id="nav-home" class="active">Home</a>
-      <a href="#memes" id="nav-memes">Random Memes</a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VideoTube - Video Teilen & Entdecken</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">VideoTube</div>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Suche Videos...">
+            <button id="searchBtn"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="nav-buttons">
+            <button id="uploadBtn">Video hochladen</button>
+            <button id="loginBtn">Anmelden</button>
+        </div>
     </nav>
 
-    <!-- Home Seite -->
-    <section id="home" class="page active">
-      <h1>Simeon Rohrmann</h1>
-      <p>idk was dad ist hier aber hab viel spaß :)</p>
-
-      <div class="cards">
-        <div class="card">
-          <h3>platzhalter oder so</h3>
-          <p>bruh kommt noch</p>
+    <main>
+        <div class="sidebar">
+            <ul>
+                <li><a href="#" class="active"><i class="fas fa-home"></i> Startseite</a></li>
+                <li><a href="#"><i class="fas fa-fire"></i> Trending</a></li>
+                <li><a href="#"><i class="fas fa-subscriptions"></i> Abos</a></li>
+                <li><a href="#"><i class="fas fa-history"></i> Verlauf</a></li>
+            </ul>
         </div>
-        <div class="card">
-          <h3>titel der unnötig ist</h3>
-          <p>kommt noch oder so</p>
+
+        <div class="content">
+            <div class="upload-modal" id="uploadModal">
+                <div class="modal-content">
+                    <h2>Video hochladen</h2>
+                    <form id="uploadForm">
+                        <input type="file" id="videoFile" accept="video/*" required>
+                        <input type="text" id="videoTitle" placeholder="Video-Titel" required>
+                        <textarea id="videoDescription" placeholder="Beschreibung"></textarea>
+                        <button type="submit">Hochladen</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="video-grid" id="videoGrid">
+                <!-- Videos werden hier dynamisch eingefügt -->
+            </div>
         </div>
-        <div class="card">
-          <h3>ich bekomm alles hin:</h3>
-          <p>bullshit.</p>
-        </div>
-      </div>
-    </section>
+    </main>
 
-    <!-- Random Memes Seite -->
-    <section id="memes" class="page">
-      <h2>Random Memes</h2>
-      <div class="gif-container">
-        <img id="randomGif" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Random GIF" />
-        <button class="btn-gif" id="newGifBtn">Neues GIF anzeigen</button>
-      </div>
-    </section>
-
-    <footer>
-      &copy; 2025 Simeon Rohrmann - oder so idk
-    </footer>
-
-    <script>
-      // GIF Liste
-      const gifs = [
-        "https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif",
-        "https://media.giphy.com/media/l0HlBO7eyXzSZkJri/giphy.gif",
-        "https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif",
-        "https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif",
-        "https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif",
-        "https://media.giphy.com/media/l0MYB8Ory7Hqefo9a/giphy.gif",
-        "https://media.giphy.com/media/3oEjHP8ELRNNlnlLGM/giphy.gif"
-      ];
-
-      const gifImg = document.getElementById('randomGif');
-      const btn = document.getElementById('newGifBtn');
-      btn.addEventListener('click', () => {
-        let newGif;
-        do {
-          newGif = gifs[Math.floor(Math.random() * gifs.length)];
-        } while (newGif === gifImg.src);
-        gifImg.src = newGif;
-      });
-
-      // Navigation & Hash-Seitenwechsel
-      const pages = document.querySelectorAll('.page');
-      const navLinks = document.querySelectorAll('nav a');
-
-      function setActivePage(hash) {
-        const id = hash.replace('#', '') || 'home';
-
-        pages.forEach(page => {
-          page.classList.toggle('active', page.id === id);
-        });
-
-        navLinks.forEach(link => {
-          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
-        });
-      }
-
-      // Auf Initialen Hash reagieren
-      window.addEventListener('load', () => {
-        setActivePage(window.location.hash);
-      });
-
-      // Auf Hash-Change reagieren
-      window.addEventListener('hashchange', () => {
-        setActivePage(window.location.hash);
-      });
-    </script>
-  </body>
+    <script src="github-api.js"></script>
+<script src="script.js"></script>
+</body>
 </html>
