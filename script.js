@@ -52,6 +52,22 @@ uploadForm.addEventListener('submit', async (e) => {
 
     try {
         const video = await processVideoUpload(file, title, description);
+        // Load videos from GitHub
+        async function loadVideos() {
+            if (!GITHUB_TOKEN || !GITHUB_REPO) {
+                console.log('No GitHub credentials found');
+                return;
+            }
+
+            try {
+                const loadedVideos = await getVideosFromGitHub();
+                videos = loadedVideos;
+                updateVideoGrid();
+            } catch (error) {
+                console.error('Error loading videos:', error);
+                alert('Konnte Videos nicht laden: ' + error.message);
+            }
+        }
         videos.push(video);
         updateVideoGrid();
         uploadModal.style.display = 'none';
