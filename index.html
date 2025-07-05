@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VideoTube - Video Teilen & Entdecken</title>
+    <base href="/">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- GitHub Pages configuration -->
+    <meta name="theme-color" content="#ff0000">
+    <meta name="description" content="Eine einfache Video-Teilungs-Plattform">
 </head>
 <body>
     <nav class="navbar">
@@ -70,6 +74,21 @@
     <!-- Loading Spinner -->
     <div id="loading" class="loading-spinner">
         <div class="spinner"></div>
+    </div>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-player">
+            <video controls id="videoPlayer">
+                <source id="videoSource" src="" type="video/mp4">
+                Dein Browser unterstützt kein Video.
+            </video>
+            <div class="video-details">
+                <h2 id="videoTitle"></h2>
+                <p id="videoDescription"></p>
+            </div>
+            <button class="close-modal">&times;</button>
+        </div>
     </div>
 
     <script src="github-api.js"></script>
