@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Countdown Sommerferien BW 2025</title>
+<title>Countdown Sommerferien BW</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
   body {
@@ -20,73 +20,87 @@
   .container {
     background: rgba(255, 255, 255, 0.15);
     border-radius: 20px;
-    padding: 40px 60px;
+    padding: 25px 40px;
     backdrop-filter: blur(15px);
     box-shadow: 0 8px 32px rgba(0,0,0,0.25);
     text-align: center;
-    max-width: 420px;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    user-select: none; /* Textauswahl verhindern */
   }
   h1 {
-    margin-bottom: 12px;
+    margin: 0;
     font-weight: 700;
-    font-size: 2.4rem;
+    font-size: 2rem;
     text-shadow: 0 0 6px rgba(0,0,0,0.3);
   }
   .subtitle {
     font-weight: 400;
-    font-size: 1.2rem;
-    margin-bottom: 40px;
+    font-size: 1.1rem;
     text-shadow: 0 0 4px rgba(0,0,0,0.2);
   }
   .countdown {
     display: flex;
     justify-content: center;
-    gap: 18px;
-    flex-wrap: wrap;
+    gap: 20px;
+    flex-wrap: nowrap;
   }
   .time-box {
     background: rgba(255,255,255,0.25);
     border-radius: 14px;
-    padding: 18px 25px;
-    min-width: 80px;
+    padding: 15px 22px;
+    min-width: 90px;
     box-shadow: 0 4px 16px rgba(255,255,255,0.1);
     transition: background 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   .time-box:hover {
     background: rgba(255,255,255,0.4);
   }
   .number {
-    font-size: 2.8rem;
+    font-size: 2.4rem;
     font-weight: 700;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.03em;
     text-shadow: 0 0 4px rgba(0,0,0,0.25);
   }
   .label {
-    margin-top: 6px;
+    margin-top: 5px;
     font-weight: 500;
-    font-size: 1.05rem;
+    font-size: 1rem;
     color: #f0f0f0cc;
+    white-space: nowrap;
   }
   footer {
-    margin-top: 30px;
+    margin-top: 18px;
     font-size: 0.9rem;
     opacity: 0.7;
     font-style: italic;
   }
-  @media (max-width: 450px) {
+  @media (max-width: 600px) {
     .container {
-      padding: 30px 20px;
-      max-width: 320px;
+      max-width: 100%;
+      padding: 20px 15px;
     }
     .countdown {
-      gap: 12px;
+      gap: 10px;
+      overflow-x: auto;
     }
     .time-box {
-      min-width: 60px;
-      padding: 14px 18px;
+      min-width: 70px;
+      padding: 12px 16px;
     }
     .number {
-      font-size: 2rem;
+      font-size: 1.8rem;
+    }
+    h1 {
+      font-size: 1.5rem;
+    }
+    .subtitle {
+      font-size: 1rem;
     }
   }
 </style>
@@ -117,7 +131,7 @@
         <div class="label">Sekunden</div>
       </div>
     </div>
-    <footer>Sommerferien BW 2025: 31. Juli – 13. September</footer>
+    <footer id="footer-text"></footer>
   </div>
 
 <script>
@@ -128,26 +142,39 @@
   const secondsEl = document.getElementById('seconds');
   const titleEl = document.getElementById('title');
   const subtitleEl = document.getElementById('subtitle');
+  const footerEl = document.getElementById('footer-text');
 
-  const startDate = new Date('2025-07-31T00:00:00');
-  const endDate = new Date('2025-09-13T23:59:59');
+  function getDatesForYear(year) {
+    // Sommerferien BW: 31. Juli - 13. September
+    const start = new Date(year, 6, 31, 0, 0, 0);  // Juli = Monat 6 (0-basiert)
+    const end = new Date(year, 8, 13, 23, 59, 59); // September = 8
+    return {start, end};
+  }
 
   function updateCountdown() {
     const now = new Date();
+    const currentYear = now.getFullYear();
+
+    let {start: startDate, end: endDate} = getDatesForYear(currentYear);
+
+    // Wenn nach Ferienende im aktuellen Jahr, dann nächstes Jahr nehmen
+    if (now > endDate) {
+      const nextYearDates = getDatesForYear(currentYear + 1);
+      startDate = nextYearDates.start;
+      endDate = nextYearDates.end;
+    }
 
     let targetDate;
     let countdownType;
 
     if (now < startDate) {
-      // Noch nicht Sommerferien: Countdown bis Ferienstart
       targetDate = startDate;
       countdownType = 'start';
     } else if (now >= startDate && now <= endDate) {
-      // Sommerferien: Countdown bis Ferienende
       targetDate = endDate;
       countdownType = 'end';
     } else {
-      // Ferien vorbei
+      // Sollte nie hier landen wegen oben, aber sicherheitshalber:
       titleEl.textContent = 'Sommerferien sind vorbei!';
       subtitleEl.textContent = 'Bis nächstes Jahr in Baden-Württemberg.';
       weeksEl.textContent = '0';
@@ -155,11 +182,11 @@
       hoursEl.textContent = '0';
       minutesEl.textContent = '0';
       secondsEl.textContent = '0';
+      footerEl.textContent = `Sommerferien BW: 31. Juli – 13. September ${currentYear}`;
       clearInterval(interval);
       return;
     }
 
-    // Überschrift + Untertitel anpassen
     if (countdownType === 'start') {
       titleEl.textContent = 'Countdown bis Sommerferien BW';
       subtitleEl.textContent = 'Noch bis zum Ferienstart';
@@ -180,7 +207,6 @@
       return;
     }
 
-    // Berechnung Wochen, Tage, Stunden, Minuten, Sekunden
     const totalSeconds = Math.floor(diff / 1000);
     const weeks = Math.floor(totalSeconds / (7 * 24 * 3600));
     const days = Math.floor((totalSeconds % (7 * 24 * 3600)) / (24 * 3600));
@@ -193,6 +219,8 @@
     hoursEl.textContent = hours.toString().padStart(2,'0');
     minutesEl.textContent = minutes.toString().padStart(2,'0');
     secondsEl.textContent = seconds.toString().padStart(2,'0');
+
+    footerEl.textContent = `Sommerferien BW: 31. Juli – 13. September ${startDate.getFullYear()}`;
   }
 
   updateCountdown();
