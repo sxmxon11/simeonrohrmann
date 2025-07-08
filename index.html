@@ -1,30 +1,202 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>Seite im Aufbau</title>
-  <style>
-    #secretContent {
-      display: none;
-      color: red;
-      font-size: 24px;
-      margin-top: 40px;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Countdown Sommerferien BW 2025</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter', sans-serif;
+    color: #fff;
+    overflow: hidden;
+  }
+  .container {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 40px 60px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    text-align: center;
+    max-width: 420px;
+  }
+  h1 {
+    margin-bottom: 12px;
+    font-weight: 700;
+    font-size: 2.4rem;
+    text-shadow: 0 0 6px rgba(0,0,0,0.3);
+  }
+  .subtitle {
+    font-weight: 400;
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    text-shadow: 0 0 4px rgba(0,0,0,0.2);
+  }
+  .countdown {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+  .time-box {
+    background: rgba(255,255,255,0.25);
+    border-radius: 14px;
+    padding: 18px 25px;
+    min-width: 80px;
+    box-shadow: 0 4px 16px rgba(255,255,255,0.1);
+    transition: background 0.3s ease;
+  }
+  .time-box:hover {
+    background: rgba(255,255,255,0.4);
+  }
+  .number {
+    font-size: 2.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-shadow: 0 0 4px rgba(0,0,0,0.25);
+  }
+  .label {
+    margin-top: 6px;
+    font-weight: 500;
+    font-size: 1.05rem;
+    color: #f0f0f0cc;
+  }
+  footer {
+    margin-top: 30px;
+    font-size: 0.9rem;
+    opacity: 0.7;
+    font-style: italic;
+  }
+  @media (max-width: 450px) {
+    .container {
+      padding: 30px 20px;
+      max-width: 320px;
     }
-  </style>
+    .countdown {
+      gap: 12px;
+    }
+    .time-box {
+      min-width: 60px;
+      padding: 14px 18px;
+    }
+    .number {
+      font-size: 2rem;
+    }
+  }
+</style>
 </head>
 <body>
-  <h1 id="mainTitle">Diese Seite ist im Aufbau.</h1>
-  <h2>by Simeon Rohrmann</h2>
-
-  <div id="secretContent">
-    🕵️‍♂️ Geheime Nachricht: Willkommen im verborgenen Bereich!
+  <div class="container">
+    <h1 id="title">Countdown Sommerferien BW</h1>
+    <div class="subtitle" id="subtitle"></div>
+    <div class="countdown">
+      <div class="time-box">
+        <div class="number" id="weeks">--</div>
+        <div class="label">Wochen</div>
+      </div>
+      <div class="time-box">
+        <div class="number" id="days">--</div>
+        <div class="label">Tage</div>
+      </div>
+      <div class="time-box">
+        <div class="number" id="hours">--</div>
+        <div class="label">Stunden</div>
+      </div>
+      <div class="time-box">
+        <div class="number" id="minutes">--</div>
+        <div class="label">Minuten</div>
+      </div>
+      <div class="time-box">
+        <div class="number" id="seconds">--</div>
+        <div class="label">Sekunden</div>
+      </div>
+    </div>
+    <footer>Sommerferien BW 2025: 31. Juli – 13. September</footer>
   </div>
 
-  <script>
-    if (window.location.hash === "#secret") {
-      document.getElementById("mainTitle").textContent = "🔒 Geheime Seite aktiviert!";
-      document.getElementById("secretContent").style.display = "block";
+<script>
+  const weeksEl = document.getElementById('weeks');
+  const daysEl = document.getElementById('days');
+  const hoursEl = document.getElementById('hours');
+  const minutesEl = document.getElementById('minutes');
+  const secondsEl = document.getElementById('seconds');
+  const titleEl = document.getElementById('title');
+  const subtitleEl = document.getElementById('subtitle');
+
+  const startDate = new Date('2025-07-31T00:00:00');
+  const endDate = new Date('2025-09-13T23:59:59');
+
+  function updateCountdown() {
+    const now = new Date();
+
+    let targetDate;
+    let countdownType;
+
+    if (now < startDate) {
+      // Noch nicht Sommerferien: Countdown bis Ferienstart
+      targetDate = startDate;
+      countdownType = 'start';
+    } else if (now >= startDate && now <= endDate) {
+      // Sommerferien: Countdown bis Ferienende
+      targetDate = endDate;
+      countdownType = 'end';
+    } else {
+      // Ferien vorbei
+      titleEl.textContent = 'Sommerferien sind vorbei!';
+      subtitleEl.textContent = 'Bis nächstes Jahr in Baden-Württemberg.';
+      weeksEl.textContent = '0';
+      daysEl.textContent = '0';
+      hoursEl.textContent = '0';
+      minutesEl.textContent = '0';
+      secondsEl.textContent = '0';
+      clearInterval(interval);
+      return;
     }
-  </script>
+
+    // Überschrift + Untertitel anpassen
+    if (countdownType === 'start') {
+      titleEl.textContent = 'Countdown bis Sommerferien BW';
+      subtitleEl.textContent = 'Noch bis zum Ferienstart';
+    } else {
+      titleEl.textContent = 'Sommerferien BW sind im Gange!';
+      subtitleEl.textContent = 'Noch bis zum Ferienende';
+    }
+
+    const diff = targetDate - now;
+
+    if (diff <= 0) {
+      weeksEl.textContent = '0';
+      daysEl.textContent = '0';
+      hoursEl.textContent = '0';
+      minutesEl.textContent = '0';
+      secondsEl.textContent = '0';
+      clearInterval(interval);
+      return;
+    }
+
+    // Berechnung Wochen, Tage, Stunden, Minuten, Sekunden
+    const totalSeconds = Math.floor(diff / 1000);
+    const weeks = Math.floor(totalSeconds / (7 * 24 * 3600));
+    const days = Math.floor((totalSeconds % (7 * 24 * 3600)) / (24 * 3600));
+    const hours = Math.floor((totalSeconds % (24 * 3600)) / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    weeksEl.textContent = weeks;
+    daysEl.textContent = days;
+    hoursEl.textContent = hours.toString().padStart(2,'0');
+    minutesEl.textContent = minutes.toString().padStart(2,'0');
+    secondsEl.textContent = seconds.toString().padStart(2,'0');
+  }
+
+  updateCountdown();
+  const interval = setInterval(updateCountdown, 1000);
+</script>
 </body>
 </html>
